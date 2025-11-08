@@ -1,14 +1,12 @@
 # Stage 1: Install dependencies and build the application using Node.js official image
-# We switch to the official Node image because it comes with npm pre-installed.
 FROM node:20-slim as builder
 WORKDIR /usr/src/app
 
 # Copy the ENTIRE source code first
 COPY . .
 
-# Use npm to install dependencies. This is more stable for complex monorepos.
-# We use 'ci' for reproducible builds in CI environments.
-RUN npm ci
+# Use npm install. It's more flexible than 'ci' as it can generate a lockfile.
+RUN npm install
 
 # We add NODE_OPTIONS here for the build step inside the container
 ENV NODE_OPTIONS=--max-old-space-size=4096
