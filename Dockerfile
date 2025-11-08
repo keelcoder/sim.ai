@@ -10,8 +10,8 @@ RUN npm install --ignore-scripts
 
 # We add NODE_OPTIONS here for the build step inside the container
 ENV NODE_OPTIONS=--max-old-space-size=4096
-# Build only the 'sim' application
-RUN npm run build -- --filter=sim
+# Build only the 'sim' application using npm workspaces to bypass turbo's confusion.
+RUN npm run build --workspace=sim
 
 # Stage 2: Create a slim production image using the Bun runtime
 FROM oven/bun:1-slim as runner
