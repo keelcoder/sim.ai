@@ -253,18 +253,22 @@ const nextConfig: NextConfig = {
 
 nextConfig.webpack = (
   config: Configuration,
-  { isServer }: { isServer: boolean } // ← isServerにも型を付けました
+  { isServer }: { isServer: boolean }
 ) => {
+  // Fixes npm packages that depend on server-side modules
   if (!isServer) {
     config.resolve ??= {};
     config.resolve.fallback = {
-      ...config.resolve.fallback,
+      ...(config.resolve.fallback || {}), // 既存のfallback設定を安全にマージ
       fs: false,
+      "fs/promises": false,
       net: false,
       tls: false,
+      process: false,
     };
   }
   return config;
 };
+
 
 export default nextConfig
