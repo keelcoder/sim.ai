@@ -5,8 +5,8 @@ WORKDIR /usr/src/app
 # Copy the ENTIRE source code first
 COPY . .
 
-# Use npm install. It's more flexible than 'ci' as it can generate a lockfile.
-RUN npm install
+# Use npm install, ignoring scripts (like husky) which are not needed for the build.
+RUN npm install --ignore-scripts
 
 # We add NODE_OPTIONS here for the build step inside the container
 ENV NODE_OPTIONS=--max-old-space-size=4096
