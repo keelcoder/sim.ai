@@ -2,16 +2,15 @@
 FROM oven/bun:1 as builder
 WORKDIR /usr/src/app
 
-# Copy dependency definition files
-COPY package.json bun.lock ./
-# Install dependencies
+# Copy the ENTIRE source code first, so bun can see the whole monorepo
+COPY . .
+
+# Now, run install. It will install dependencies for all workspaces.
 RUN bun install
 
-# Copy the rest of the source code
-COPY . .
-# Build the application
 # We add NODE_OPTIONS here for the build step inside the container
 ENV NODE_OPTIONS=--max-old-space-size=4096
+# Build only the 'sim' application
 RUN bun run build --filter=sim
 
 # Stage 2: Create a slim production image
