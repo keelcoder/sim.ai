@@ -251,9 +251,12 @@ const nextConfig: NextConfig = {
   },
 }
 
-nextConfig.webpack = (config, { isServer }) => {
-  // Fixes npm packages that depend on `fs` module
+nextConfig.webpack = (
+  config: Configuration,
+  { isServer }: { isServer: boolean } // ← isServerにも型を付けました
+) => {
   if (!isServer) {
+    config.resolve ??= {};
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
