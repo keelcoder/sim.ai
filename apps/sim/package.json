@@ -14,7 +14,6 @@
     "dev:full": "concurrently -n \"App,Realtime\" -c \"cyan,magenta\" \"bun run dev\" \"bun run dev:sockets\"",
     "build": "next build",
     "start": "next start",
-    "prepare": "cd ../.. && bun husky",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
