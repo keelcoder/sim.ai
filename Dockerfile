@@ -12,7 +12,7 @@ COPY . .
 # Build the application
 # We add NODE_OPTIONS here for the build step inside the container
 ENV NODE_OPTIONS=--max-old-space-size=4096
-RUN bun run build
+RUN bun run build --filter=sim
 
 # Stage 2: Create a slim production image
 FROM oven/bun:1-slim as runner
